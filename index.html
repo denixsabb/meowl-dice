@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DENIX DICE 🎲</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Luckiest Guy',cursive;
+    background: radial-gradient(circle at top,#0f0f0f,#000);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    color:white;
+    text-align:center;
+}
+
+/* CONTAINER */
+.container{
+    max-width:850px;
+    width:100%;
+}
+
+/* TITLE */
+h1{
+    font-size:3.5rem;
+    color:#00d4ff;
+    text-shadow:0 0 20px rgba(0,212,255,0.6);
+    margin-bottom:5px;
+}
+
+/* SUB TEXT */
+.sub{
+    opacity:0.7;
+    margin-bottom:20px;
+}
+
+/* COLORS */
+.colors{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:20px 0;
+}
+
+.color{
+    padding:9px 18px;
+    border-radius:999px;
+    font-weight:bold;
+    font-size:14px;
+    color:white;
+    transition:0.2s;
+    box-shadow:0 0 10px rgba(0,0,0,0.25);
+}
+
+.red{background:#ff5c5c;}
+.orange{background:#ffb86b;}
+.yellow{background:#ffe66d; color:#222;}
+.green{background:#5cff9d;}
+.blue{background:#5cc8ff;}
+.purple{background:#c084fc;}
+
+.color:hover{
+    transform:scale(1.1);
+}
+
+/* DICE */
+.dice-grid{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin:25px 0;
+}
+
+.die{
+    width:110px;
+    height:110px;
+    border-radius:18px;
+    background:#fff;
+    transition:0.2s;
+    box-shadow:0 0 20px rgba(0,212,255,0.15);
+}
+
+/* BUTTON */
+button{
+    padding:14px 40px;
+    font-size:20px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    background:linear-gradient(45deg,#00d4ff,#0066ff);
+    color:white;
+    transition:0.2s;
+}
+
+button:hover{
+    transform:scale(1.1);
+}
+
+/* LUCKY */
+#lucky{
+    display:none;
+    margin-top:15px;
+    font-size:2rem;
+    color:gold;
+    text-shadow:0 0 15px gold;
+    animation:pulse 0.8s infinite;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1)}
+    50%{transform:scale(1.2)}
+    100%{transform:scale(1)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>DENIX DICE 🎲</h1>
+    <div class="sub">4 Color Dice • PRO VERSION</div>
+
+    <!-- COLORS -->
+    <div class="colors">
+        <span class="color red">Red</span>
+        <span class="color orange">Orange</span>
+        <span class="color yellow">Yellow</span>
+        <span class="color green">Green</span>
+        <span class="color blue">Blue</span>
+        <span class="color purple">Purple</span>
+    </div>
+
+    <!-- DICE -->
+    <div class="dice-grid">
+        <div class="die" id="d1"></div>
+        <div class="die" id="d2"></div>
+        <div class="die" id="d3"></div>
+        <div class="die" id="d4"></div>
+    </div>
+
+    <button onclick="roll()">ROLL 🎲</button>
+
+    <div id="lucky">🍀 LUCKY WIN! 🍀</div>
+
+</div>
+
+<script>
+
+const colors = [
+    "#ff5c5c",
+    "#ffb86b",
+    "#ffe66d",
+    "#5cff9d",
+    "#5cc8ff",
+    "#c084fc"
+];
+
+const dice = ["d1","d2","d3","d4"];
+
+let count = 0;
+let nextLucky = Math.floor(Math.random()*8)+4;
+
+function rand(){
+    return Math.floor(Math.random()*colors.length);
+}
+
+function roll(){
+
+    count++;
+
+    let lucky = count >= nextLucky;
+
+    if(lucky){
+        document.getElementById("lucky").style.display="block";
+        count = 0;
+        nextLucky = Math.floor(Math.random()*8)+4;
+    }else{
+        document.getElementById("lucky").style.display="none";
+    }
+
+    dice.forEach(id=>{
+        let el = document.getElementById(id);
+
+        el.style.background = colors[rand()];
+        el.style.transform = "scale(1.15)";
+
+        setTimeout(()=>{
+            el.style.transform = "scale(1)";
+        },120);
+    });
+}
+
+</script>
+
+</body>
+</html>
